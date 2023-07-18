@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "LIClient"
+		},
+		{
+			"path": "LILibCommon"
+		},
+		{
+			"path": "LIServer"
+		}
+	],
+	"settings": {
+		"vcpkg.target.useManifest": true,
+		"cmake.configureArgs": [
+			"-DVCPKG_MANIFEST_MODE=ON",
+			"-DVCPKG_TARGET_TRIPLET=x64-windows-clang"
+		],
+		"vcpkg.target.useStaticLib": false,
+		"vcpkg.target.defaultTriplet": "x64-windows-clang"
+	},
+}
