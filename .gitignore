@@ -1,5 +1,5 @@
-./LIClient/.cache
-./LIClient/build
+LIClient/.cache/
+LIClient/build/
 
-./LILibCommon/.cache
-./LILibCommon/build
+LILibCommon/.cache/
+LILibCommon/build/

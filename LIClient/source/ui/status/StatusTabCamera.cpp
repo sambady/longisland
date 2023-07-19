@@ -7,7 +7,7 @@ namespace li
 {
 	void PrintVector2(const char * name, const Vector2 & vector2)
 	{
-		ImGui::Text(name);
+		ImGui::Text("%s", name);
 		ImGui::Text("%.1f", vector2.x);
 		ImGui::SameLine();
 		ImGui::Text("%.1f", vector2.y);
@@ -15,7 +15,7 @@ namespace li
 
 	void PrintVector3(const char* name, const WorldPos& worldPos)
 	{
-		ImGui::Text(name);
+		ImGui::Text("%s", name);
 		ImGui::Text("%.2f", worldPos.x);
 		ImGui::SameLine();
 		ImGui::Text("%.2f", worldPos.y);

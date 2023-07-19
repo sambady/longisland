@@ -29,7 +29,7 @@ namespace li
 		if (actor_ == nullptr)
 			return;
 		
-		if (!path_.empty())
+		if (path_.empty())
 			return;
 
 		auto funcCleanUpPath = [&]()
@@ -48,16 +48,37 @@ namespace li
 			return;
 
 		auto nextPointIt = lastPointIt + 1;
-		if (nextPointIt == path_.end())
+		if (nextPointIt == path_.end()) {
+			path_.clear();
+			lastPoint_.reset();
 			return;
+		}
 
 		auto nextPoint = *nextPointIt;
 		auto lastPoint = *lastPointIt;
 
 		auto direction = nextPoint - lastPoint;
+		direction.Normalize();
+		auto currentPosition = actor_->GetPosition();
 
 		auto sizeToEnd = nextPoint - actor_->GetPosition();
 		//actor_->SetPosition(*);
+
+
+		auto speed = 2.f * quantumParams.GetTimeDelta();
+
+		auto distanceBetweenPoint = (nextPoint - lastPoint).GetLenght();
+		auto distanceBetweenActorAndLast = (currentPosition - lastPoint).GetLenght();
+
+
+		if(sizeToEnd.GetLenght() > speed && distanceBetweenPoint > distanceBetweenActorAndLast) {
+			auto newPos = currentPosition + direction * speed;
+			actor_->SetPosition(newPos);
+		} 
+		else {
+			actor_->SetPosition(nextPoint);
+			lastPoint_ = nextPoint;
+		}
 	}
 
 	void SceneComponentLocalHero::Render()
@@ -92,6 +113,7 @@ namespace li
 				path_ = pathFinder.GetPath(
 					actor_->GetPosition(),
 					*worldPos);
+				lastPoint_.reset();
 			}
 		}
 

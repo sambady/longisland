@@ -22,9 +22,6 @@ namespace li
 	private:
 		std::shared_ptr<Actor> actor_;
 
-
-		//std::optional<WorldPos> targetPosition_;
-
 		std::vector<WorldPos> path_;
 		std::optional<WorldPos> lastPoint_;
 	};

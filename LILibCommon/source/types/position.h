@@ -8,7 +8,8 @@ namespace li
 	struct WorldPos
 	{
 		friend WorldPosDelta operator-(const WorldPos & left, const WorldPos & right);
-
+		WorldPos operator+(const WorldPosDelta & delta);
+		WorldPos operator-(const WorldPosDelta & delta);
 		float x = 0.0f;
 		float y = 0.0f;
 	};
@@ -16,7 +17,9 @@ namespace li
 	struct WorldPosDelta
 	{
 		float GetLenght() const;
+		void Normalize();
 		std::partial_ordering operator<=>(const WorldPosDelta& other) const;
+		WorldPosDelta operator*(float val) const;
 		float x = 0.0f;
 		float y = 0.0f;
 	};

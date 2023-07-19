@@ -10,7 +10,7 @@ namespace li
 
 		for(auto & it : records_)
 		{
-			ImGui::Text(it.c_str());
+			ImGui::Text("%s", it.c_str());
 		}
 
 		ImGui::EndListBox();
