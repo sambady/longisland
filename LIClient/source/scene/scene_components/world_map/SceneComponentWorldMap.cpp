@@ -1,6 +1,8 @@
 #include "Precompiled.h"
 #include "SceneComponentWorldMap.h"
 
+#include <random>
+
 #include "scene/Scene.h"
 #include "algorithm/algorithm_position.h"
 
@@ -8,7 +10,19 @@ namespace li
 {
 	void SceneComponentWorldMap::Init()
 	{
+		std::vector<std::pair<int, int>> positions;
+		for(int x = 10 ; x < 100; x++) {
+			for(int y = 10 ; y < 100 ; y++) {
+				positions.push_back({x,y});
+			}
+		}
+		std::vector<std::pair<int, int>> dest;
+		std::ranges::sample(positions, std::back_inserter(dest), 100,
+		                    std::mt19937 {std::random_device{}()});
 
+		for(auto & it : dest) {
+			trees_.push_back(WorldToCell(WorldPos(it.first, it.second)));
+		}
 	}
 
 	void SceneComponentWorldMap::Render()

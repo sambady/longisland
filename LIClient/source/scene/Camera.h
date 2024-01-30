@@ -13,8 +13,7 @@ namespace li
 
 		void SetCameraOffset(const Vector3 offset);
 		void SetCameraType(int cameraType);
-
-		void SetFovy(float fovy);
+		int GetCameraType() const;
 
 		const Camera& GetCamera() const
 		{

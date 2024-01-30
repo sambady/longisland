@@ -1,7 +1,8 @@
-cmake_minimum_required(VERSION 3.26.0)
-project(Long_island )
+cmake_minimum_required(VERSION 3.24.0)
 
-include_directories(LILibCommon)
-include_directories(LILibClient)
+project(LongIsland)
+
+add_subdirectory(LILibCommon)
+add_subdirectory(LIClient)
 
 

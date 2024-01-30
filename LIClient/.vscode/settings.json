@@ -1,15 +1,17 @@
 {
     "vcpkg.target.useManifest": true,
     "vcpkg.general.enable": true,
-    "vcpkg.target.defaultTriplet": "x64-windows-clang",
+    "vcpkg.target.defaultTriplet": "x64-windows",
     "cmake.configureArgs": [
-        "-DVCPKG_TARGET_TRIPLET=x64-windows-clang",
+        "-DVCPKG_TARGET_TRIPLET=x64-windows",
         "-DVCPKG_MANIFEST_MODE=ON",
-        "-DVCPKG_DISABLE_COMPILER_TRACKING=ON"
+        "-DVCPKG_DISABLE_COMPILER_TRACKING=ON",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=1"
     ],
+    "cmake.generator": "Ninja",
     "cmake.configureSettings": {
         "CMAKE_TOOLCHAIN_FILE":
-            "C:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake"
+            "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     
 }

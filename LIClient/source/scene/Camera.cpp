@@ -12,7 +12,7 @@ namespace li
 			{ 0.0f, 1.0f, 0.0f },
 			45.0f, 0 };
 
-		camera_.projection = CAMERA_ORTHOGRAPHIC;             // Camera mode type
+		SetCameraType(CAMERA_PERSPECTIVE);
 	}
 
 	void LiCamera::SetCameraPosition(const WorldPos& aTargetPosition)
@@ -44,11 +44,17 @@ namespace li
 	void LiCamera::SetCameraType(int cameraType)
 	{
 		camera_.projection = cameraType;
+
+		if(cameraType == CAMERA_PERSPECTIVE) {
+			camera_.fovy = 30.f;
+		}
+		else if(cameraType == CAMERA_ORTHOGRAPHIC) {
+			camera_.fovy = 20.f;
+		}
 	}
 
-	void LiCamera::SetFovy(float fovy)
-	{
-		camera_.fovy = fovy;
+	int LiCamera::GetCameraType() const {
+		return camera_.projection;
 	}
 
 	Vector3 LiCamera::GetCameraDirection() const
@@ -60,6 +66,10 @@ namespace li
 
 	void LiCamera::UpdateKeyboard()
 	{
+		//camera_.position.y += GetMouseWheelMove() * 2;
+
+		camera_.position = Vector3Add(camera_.position, Vector3Scale(GetCameraDirection(), GetMouseWheelMove() * 10));
+
 		if (IsKeyDown('W'))	{
 			MoveCamera(helpers::Vector3ToWorldPosDelta(GetCameraDirection()));
 		}

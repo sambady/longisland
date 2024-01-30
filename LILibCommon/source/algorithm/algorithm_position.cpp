@@ -22,6 +22,11 @@ namespace li
 		return CellPos{ (int)pos.x, (int)pos.y };
 	}
 
+	WorldPos CellToWorld(const CellPos & pos)
+	{
+		return WorldPos{ pos.x + 0.5f, pos.y + 0.5f };
+	}
+
 	bool operator==(const CellPos& left, const CellPos& right)
 	{
 		return left.x == right.x && left.y == right.y;

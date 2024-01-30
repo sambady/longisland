@@ -12,7 +12,7 @@ namespace li
         RegisterComponent<FooterTabCamera>(&ui)->tabName_ = "camera";
         RegisterComponent<FooterTabWorld>(&ui)->tabName_ = "world";
 
-        currentActiveTab_ = std::type_index(typeid(FooterTabCamera));
+        currentActiveTab_ = std::type_index(typeid(FooterTabWorld));
     }
 
     void Footer::Render(const UiBoxConfig& config) 

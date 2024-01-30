@@ -16,25 +16,29 @@ namespace li
 	{	
 		ImGui::SetNextItemWidth(100);
 
-		if (ImGui::InputFloat3("camera", offset_, "%.0f"))
+		auto & camera = Scene().GetCamera();
+
+		//if (ImGui::InputFloat3("camera", offset_, "%.0f"))
+		//{
+		//	Scene().GetCamera().SetCameraOffset(GetCameraOffset(offset_));
+		//}
+
+		const int cameraTypeOld = camera.GetCameraType();
+		bool isPerspective = cameraTypeOld == CAMERA_PERSPECTIVE;
+
+		if (ImGui::Checkbox("pespective", &isPerspective))
 		{
-			Scene().GetCamera().SetCameraOffset(GetCameraOffset(offset_));
-		}
-		
-		if (ImGui::Checkbox("pespective", &cameraType_))
-		{
-			auto cameraType = CAMERA_ORTHOGRAPHIC;
-			float fovy;
-			if (cameraType_) {
+			auto cameraType = cameraTypeOld;
+			if (isPerspective) {
 				cameraType = CAMERA_PERSPECTIVE;
-				fovy = 30.f;
 			}
 			else {
 				cameraType = CAMERA_ORTHOGRAPHIC;
-				fovy = 20.f;
 			}
-			Scene().GetCamera().SetCameraType(cameraType);
-			Scene().GetCamera().SetFovy(fovy);
+
+			if(cameraType != cameraTypeOld) {
+				camera.SetCameraType(cameraType);
+			}
 		}
 	
 	}

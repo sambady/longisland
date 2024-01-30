@@ -6,6 +6,8 @@
 #include "navmesh/path_finder.h"
 #include "scene/Actor.h"
 #include "scene/Scene.h"
+#include "ui/Ui.h"
+#include "ui/status/StatusTabLogger.h"
 #include "utils/stl/stl_container_helper.h"
 #include "world_map/SceneComponentWorldMap.h"
 
@@ -91,6 +93,9 @@ namespace li
 		std::vector<NavMesh::Polygon> pols;
 		worldMap->DoWithTrees([&](const auto & pos)
 			{
+				if((CellToWorld(pos) - actor_->GetPosition()).GetLenght() > 50)
+					return;
+
 				NavMesh::Polygon poligon;
 				poligon.AddPoint(pos.x, pos.y);
 				pols.push_back(poligon);
@@ -101,11 +106,10 @@ namespace li
 		{
 			if (auto worldPos = Scene().GetMouseWorldPosition(); worldPos)
 			{
-
+				auto timeStart = std::chrono::system_clock::now();
 				NavMesh::PathFinder pathFinder;
 
 				std::vector<WorldPos> points = { actor_->GetPosition() , *worldPos };
-
 
 				pathFinder.AddPolygons(pols, 2);
 
@@ -113,7 +117,17 @@ namespace li
 				path_ = pathFinder.GetPath(
 					actor_->GetPosition(),
 					*worldPos);
+				if(!path_.empty()) {
+					path_[0] = actor_->GetPosition();
+				}
 				lastPoint_.reset();
+
+				auto timeEnd = std::chrono::system_clock::now();
+
+				Ui().GetComp<StatusTabLogger>()->AddRecord(
+					std::format("Path {}",
+						std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - timeStart).count()));
+
 			}
 		}
 

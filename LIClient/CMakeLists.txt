@@ -2,17 +2,19 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(LIClient)
 
-
 find_package(raylib CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 
-add_executable(LIClient 
-./3dparty/rlimgui/extras/FA6FreeSolidFontData.h
-./3dparty/rlimgui/extras/FontAwsome_LICENSE.txt
-./3dparty/rlimgui/extras/IconsFontAwesome6.h
-./3dparty/rlimgui/rlImGui.cpp
-./3dparty/rlimgui/rlImGui.h
-./3dparty/rlimgui/rlImGuiColors.h
+set(3D_PARTY_INCLUDE
+        ./3dparty/rlimgui/extras/FA6FreeSolidFontData.h
+        ./3dparty/rlimgui/extras/FontAwsome_LICENSE.txt
+        ./3dparty/rlimgui/extras/IconsFontAwesome6.h
+        ./3dparty/rlimgui/rlImGui.cpp
+        ./3dparty/rlimgui/rlImGui.h
+        ./3dparty/rlimgui/rlImGuiColors.h
+        )
+
+add_executable(LIClient ${3D_PARTY_INCLUDE}
 ./source/helpers/WorldPositionHelper.cpp
 ./source/helpers/WorldPositionHelper.h
 ./source/IBaseGameObject.h
@@ -58,6 +60,10 @@ add_executable(LIClient
 ./source/ui/status/StatusTabLogger.h
 ./source/ui/status/StatusTabMouse.cpp
 ./source/ui/status/StatusTabMouse.h
+./source/ui/status/StatusTabHelpers.cpp
+./source/ui/status/StatusTabHelpers.cpp
+./source/ui/status/StatusTabLocalHero.cpp
+./source/ui/status/StatusTabLocalHero.h
 ./source/ui/Ui.cpp
 ./source/ui/Ui.h
 ./source/ui/UiBox.cpp
@@ -72,6 +78,7 @@ add_executable(LIClient
 ./source/utils/stl/stl_container_helper.h
 ./source/utils/StorageByTypeInternal.h
 )
+
 target_include_directories(LIClient PRIVATE "source")
 target_include_directories(LIClient PRIVATE "3dparty")
 target_include_directories(LIClient PRIVATE "./")
@@ -79,7 +86,7 @@ target_include_directories(LIClient PRIVATE "../LILibCommon/source")
 
 target_link_libraries(LIClient PRIVATE raylib)
 target_link_libraries(LIClient PRIVATE imgui::imgui)
-target_link_libraries(LIClient PRIVATE "${CMAKE_SOURCE_DIR}/../LILibCommon/build/liblicommon.lib")
+target_link_libraries(LIClient PRIVATE "${CMAKE_SOURCE_DIR}/../LILibCommon/cmake-build-release/liblicommon.lib")
 
 target_precompile_headers(LIClient PRIVATE "source/Precompiled.h")
 target_compile_features(LIClient PRIVATE cxx_std_20)

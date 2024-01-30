@@ -25,7 +25,7 @@ namespace li
 	}
 
 
-	int GetRenderWidth() {
+    int GetRenderWidth() {
 		return GetScreenWidth() - GetRenderOffset() * 2;
 	}
 
@@ -59,6 +59,11 @@ namespace li
 
 		quantumParams_.current = std::chrono::system_clock::now();
 		quantumParams_.last = std::chrono::system_clock::now();
+
+		for(const auto & component : components_ | std::views::values)
+		{
+			component->Init();
+		}
 	}
 
 
@@ -93,13 +98,13 @@ namespace li
 
 		std::vector<std::shared_ptr<ISceneComponent>> components;
 
-		for(auto component : components_ | std::views::values)
+		for(const auto & component : components_ | std::views::values)
 		{
 			components.push_back(component);
 		}
-		std::sort(components.begin(), components.end(), [](const auto & a, const auto & b)
+		std::ranges::sort(components, [](const auto & a, const auto & b)
 		{
-				return a->drawOrder > b->drawOrder;
+			return a->drawOrder > b->drawOrder;
 		});
 
 		quantumParams_.last = quantumParams_.current;

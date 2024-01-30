@@ -10,6 +10,5 @@ namespace li
 		void Render() override;
 
 		float offset_[3] = { -20.f, 20.f, -20.f };
-		bool cameraType_ = 0;
 	};
 }
