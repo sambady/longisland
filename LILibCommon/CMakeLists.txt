@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.20.0)
+cmake_minimum_required(VERSION 3.24.0)
 
-project(LiLibCommon)
+project(LILibCommon)
 
-add_library(liblicommon 
+add_library(LILibCommon
 ./source/algorithm/algorithm_position.cpp
 ./source/algorithm/algorithm_position.h
 ./source/msgpack/msgpack.hpp
@@ -24,4 +24,4 @@ add_library(liblicommon
 ./source/types/position.h
 )
 
-target_compile_features(liblicommon PRIVATE cxx_std_20)
+target_compile_features(LILibCommon PRIVATE cxx_std_20)

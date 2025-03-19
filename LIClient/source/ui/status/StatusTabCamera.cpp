@@ -1,7 +1,6 @@
 #include "StatusTabCamera.h"
 
 #include "scene/Scene.h"
-#include "StatusTabHelpers.h"
 
 
 namespace li
@@ -10,8 +9,8 @@ namespace li
 	void StatusTabCamera::Render()
 	{
 		Scene().FillMouseInfo();
-		StatusTabHelpers::PrintVector2("mouse_pos", mousePos);
-		StatusTabHelpers::PrintVector3("world_pos", worldPos);
+		//StatusTabHelpers::PrintVector2("mouse_pos", mousePos);
+		//StatusTabHelpers::PrintVector3("world_pos", worldPos);
 	}
 
 

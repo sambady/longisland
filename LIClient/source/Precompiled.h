@@ -18,7 +18,7 @@
 #include <imgui.h>
 #include <raylib.h>
 #include "raymath.h"
-#include "3dparty/rlimgui/rlImGui.h"
+#include "rlImGui.h"
 
 #include "types/actor_id.h"
 #include "types/position.h"

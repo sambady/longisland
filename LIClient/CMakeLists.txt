@@ -1,20 +1,66 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.24.0)
 
 project(LIClient)
 
-find_package(raylib CONFIG REQUIRED)
-find_package(imgui CONFIG REQUIRED)
 
-set(3D_PARTY_INCLUDE
-        ./3dparty/rlimgui/extras/FA6FreeSolidFontData.h
-        ./3dparty/rlimgui/extras/FontAwsome_LICENSE.txt
-        ./3dparty/rlimgui/extras/IconsFontAwesome6.h
-        ./3dparty/rlimgui/rlImGui.cpp
-        ./3dparty/rlimgui/rlImGui.h
-        ./3dparty/rlimgui/rlImGuiColors.h
-        )
+include(FetchContent)
 
-add_executable(LIClient ${3D_PARTY_INCLUDE}
+
+Set(FETCHCONTENT_QUIET FALSE)
+
+message(STATUS "Include raylib")
+set(RAYLIB_VERSION 5.5)
+FetchContent_Declare(
+        raylib
+        URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+        FIND_PACKAGE_ARGS ${RAYLIB_VERSION} EXACT
+)
+SET(BUILD_EXAMPLES OFF CACHE INTERNAL "")
+
+#FetchContent_Declare(
+#        raylib
+#        GIT_REPOSITORY https://github.com/raysan5/raylib
+#        GIT_PROGRESS TRUE)
+FetchContent_MakeAvailable(raylib)
+
+message(STATUS "Include imgui")
+FetchContent_Declare(
+        ImGui
+        GIT_REPOSITORY https://github.com/ocornut/imgui
+        GIT_PROGRESS TRUE)
+
+FetchContent_MakeAvailable(ImGui)
+FetchContent_GetProperties(ImGui SOURCE_DIR IMGUI_DIR)
+
+add_library(
+        imgui STATIC
+        ${imgui_SOURCE_DIR}/imgui.cpp
+        ${imgui_SOURCE_DIR}/imgui_draw.cpp
+        ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+        ${imgui_SOURCE_DIR}/imgui_tables.cpp)
+target_include_directories(imgui INTERFACE ${imgui_SOURCE_DIR})
+
+
+#FetchContent_MakeAvailable(imgui)
+
+
+#find_package(raylib CONFIG REQUIRED)
+#find_package(imgui CONFIG REQUIRED)
+
+message(STATUS "Include rlImGui")
+FetchContent_Declare(
+        rlImGui
+        GIT_REPOSITORY https://github.com/raylib-extras/rlImGui
+        GIT_TAG main
+        GIT_PROGRESS TRUE)
+FetchContent_MakeAvailable(rlImGui)
+FetchContent_GetProperties(rlImGui SOURCE_DIR RLIMGUI_DIR)
+
+add_library(rlimgui STATIC ${rlimgui_SOURCE_DIR}/rlImgui.cpp)
+target_link_libraries(rlimgui PRIVATE imgui raylib)
+target_include_directories(rlimgui INTERFACE ${rlimgui_SOURCE_DIR})
+
+add_executable(LIClient
 ./source/helpers/WorldPositionHelper.cpp
 ./source/helpers/WorldPositionHelper.h
 ./source/IBaseGameObject.h
@@ -60,10 +106,6 @@ add_executable(LIClient ${3D_PARTY_INCLUDE}
 ./source/ui/status/StatusTabLogger.h
 ./source/ui/status/StatusTabMouse.cpp
 ./source/ui/status/StatusTabMouse.h
-./source/ui/status/StatusTabHelpers.cpp
-./source/ui/status/StatusTabHelpers.cpp
-./source/ui/status/StatusTabLocalHero.cpp
-./source/ui/status/StatusTabLocalHero.h
 ./source/ui/Ui.cpp
 ./source/ui/Ui.h
 ./source/ui/UiBox.cpp
@@ -85,8 +127,9 @@ target_include_directories(LIClient PRIVATE "./")
 target_include_directories(LIClient PRIVATE "../LILibCommon/source")
 
 target_link_libraries(LIClient PRIVATE raylib)
-target_link_libraries(LIClient PRIVATE imgui::imgui)
-target_link_libraries(LIClient PRIVATE "${CMAKE_SOURCE_DIR}/../LILibCommon/cmake-build-release/liblicommon.lib")
+target_link_libraries(LIClient PRIVATE imgui)
+target_link_libraries(LIClient PRIVATE rlimgui)
+target_link_libraries(LIClient PRIVATE LILibCommon)
 
 target_precompile_headers(LIClient PRIVATE "source/Precompiled.h")
 target_compile_features(LIClient PRIVATE cxx_std_20)

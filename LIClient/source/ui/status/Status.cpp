@@ -1,7 +1,6 @@
 #include "Status.h"
 
 #include "StatusTabCamera.h"
-#include "StatusTabLocalHero.h"
 #include "StatusTabLogger.h"
 #include "StatusTabMouse.h"
 #include "ui/Ui.h"
@@ -13,7 +12,6 @@ namespace li
         RegisterComponent<StatusTabMouse>(&ui);
         RegisterComponent<StatusTabLogger>(&ui);
         RegisterComponent<StatusTabCamera>(&ui);
-    	RegisterComponent<StatusTabLocalHero>(&ui);
     }
 
 	void Status::Render(const UiBoxConfig& uiBoxConfig)

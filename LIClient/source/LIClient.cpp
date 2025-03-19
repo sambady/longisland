@@ -3,7 +3,6 @@
 #include "GameConfig.h"
 #include "raylib.h"
 
-#include "3dparty/rlimgui/rlImGui.h"
 #include "ui/Ui.h"
 #include "scene/Scene.h"
 

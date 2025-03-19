@@ -6,7 +6,7 @@ namespace li
 	{
 		ImGui::InputInt("log size", &records_amount_);
 
-		ImGui::BeginListBox("", ImVec2{ 140, 200 });
+		ImGui::BeginListBox("logger", ImVec2{ 140, 200 });
 
 		for(auto & it : records_)
 		{
